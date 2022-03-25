@@ -1,0 +1,278 @@
+#pragma region VEXcode Generated Robot Configuration
+// Make sure all required headers are included.
+#include <stdio.h>
+#include <stdlib.h>
+#include <stdbool.h>
+#include <math.h>
+#include <string.h>
+
+
+#include "vex.h"
+
+using namespace vex;
+
+// Brain should be defined by default
+brain Brain;
+
+
+// START V5 MACROS
+#define waitUntil(condition)                                                   \
+  do {                                                                         \
+    wait(5, msec);                                                             \
+  } while (!(condition))
+
+#define repeat(iterations)                                                     \
+  for (int iterator = 0; iterator < iterations; iterator++)
+// END V5 MACROS
+
+
+// Robot configuration code.
+motor Motor1 = motor(PORT1, ratio18_1, false);
+
+bumper BumperA = bumper(Brain.ThreeWirePort.A);
+bumper BumperB = bumper(Brain.ThreeWirePort.B);
+bumper BumperC = bumper(Brain.ThreeWirePort.C);
+bumper BumperE = bumper(Brain.ThreeWirePort.E);
+bumper BumperF = bumper(Brain.ThreeWirePort.F);
+bumper BumperG = bumper(Brain.ThreeWirePort.G);
+led LEDD = led(Brain.ThreeWirePort.D);
+light LightH = light(Brain.ThreeWirePort.H);
+
+
+#pragma endregion VEXcode Generated Robot Configuration
+/*----------------------------------------------------------------------------*/
+/*                                                                            */
+/*    Module:       main.cpp                                                  */
+/*    Author:       {author}                                                  */
+/*    Created:      {date}                                                    */
+/*    Description:  V5 project                                                */
+/*                                                                            */
+/*----------------------------------------------------------------------------*/
+
+// Include the V5 Library
+#include "vex.h"
+
+// Allows for easier use of the VEX Library
+using namespace vex;
+int currentfloor = 0;
+
+void thirdfloormove(){
+  //third floor
+  if(currentfloor == 0){
+    Motor1.spin(forward,6,volt);
+    LEDD.on();
+    wait(1.4,seconds);
+    Motor1.stop();
+    currentfloor = 3;
+    Brain.Screen.print("3rd floor to 1st floor");
+    wait(2,seconds);
+    Brain.Screen.clearScreen();
+  }else{
+    Brain.Screen.print("Not able to move up");
+  }
+  if (currentfloor == 3) {
+    currentfloor = 3;
+    Brain.Screen.print("Not able to move up");
+  }
+  if (currentfloor == 2) {
+    Motor1.spin(forward,6,volt);
+    LEDD.on();
+    wait(2.5,seconds);
+    LEDD.off();
+    Motor1.stop();
+    currentfloor = 3;
+    Brain.Screen.print("3rd floor to 2nd floor");
+    wait(2,seconds);
+    Brain.Screen.clearScreen();
+  }
+  //third floor
+
+
+}
+
+void secondfloor(){
+  if(currentfloor == 3){
+    Motor1.spin(reverse,6,volt);
+    wait(0.4,seconds);
+    Motor1.stop();
+    currentfloor = 2;
+    Brain.Screen.print("2nd floor to 3rd floor");
+    wait(2,seconds);
+    Brain.Screen.clearScreen();
+  }
+
+  if (currentfloor == 0) {
+     Motor1.spin(forward,3,volt);
+     LEDD.on();
+     wait(1.4,seconds);
+     LEDD.off();
+     Motor1.stop();
+     currentfloor = 2;
+     Brain.Screen.print("2nd floor to 1st floor");
+     wait(2,seconds);
+    Brain.Screen.clearScreen();
+  }
+  if (currentfloor == 2) {
+    Motor1.stop();
+    currentfloor = 2;
+  }
+  if (currentfloor == 3) {
+     Motor1.spin(reverse,3,volt);
+     LEDD.on();
+     wait(0.4,seconds);
+     LEDD.off();
+     Motor1.stop();
+     currentfloor = 2;
+     Brain.Screen.print("2nd floor to 3rd floor");
+     wait(2,seconds);
+     Brain.Screen.clearScreen();
+  }
+
+}
+
+void firstfloor(){
+  if(currentfloor == 0){
+    Motor1.stop();
+    currentfloor = 0;
+    LEDD.off();
+  }
+  if(currentfloor == 2){
+    Motor1.spin(reverse,5,volt);
+    wait(1.4,seconds);
+    Motor1.stop();
+    currentfloor = 0;
+    Brain.Screen.print("1st floor to 2rd floor");
+    wait(2,seconds);
+    Brain.Screen.clearScreen();
+  }
+
+  if (currentfloor == 3) {
+    Motor1.spin(reverse,5,volt);
+    wait(1.4,seconds);
+    Motor1.stop();
+    currentfloor = 0;
+    Brain.Screen.print("1st floor to 3rd floor");
+    wait(2,seconds);
+    Brain.Screen.clearScreen();
+  }
+
+}
+
+
+
+
+
+//Call button BumperA is 2nd floor
+//Call button BumperB is 3rd floor
+//Call button BumperC is 1st
+
+//inside button BumperE is 3rd floor
+//inside button BumperF is 2nd floor
+//inside button BumperG is 1st floor
+
+//Outside call buttons
+// void BumperA_is_pressed(){//2nd floor
+//   switch(currentfloor){
+//       case 1:
+//         Motor1.spin(forward,6,volt);
+//         wait(0.4,seconds);
+//         Motor1.stop();
+//         wait(20,seconds);
+//         Motor1.spin(reverse,6,volt);
+//         wait(0.4,seconds);
+//         Motor1.stop();
+//       break;
+//       case 2:
+//         Motor1.stop();
+//       break;
+//       case 3:
+//         Motor1.spin(reverse,6,volt);
+//         wait(0.4,seconds);
+//         Motor1.stop();
+//         wait(20,seconds);
+//         Motor1.spin(reverse,6,volt);
+//         wait(0.4,seconds);
+//         Motor1.stop();
+//       break;
+//   }
+//   currentfloor = 2;
+// }
+
+// void BumperB_is_pressed(){//3rd floor
+//   switch(currentfloor){
+//       case 1:
+//         Motor1.spin(forward,6,volt);
+//         wait(0.8,seconds);
+//         Motor1.stop();
+//         wait(20,seconds);
+//         Motor1.spin(reverse,6,volt);
+//         wait(0.8,seconds);
+//         Motor1.stop();
+//       break;
+//       case 2:
+//         Motor1.spin(forward,6,volt);
+//         wait(0.4,seconds);
+//         Motor1.stop();
+//         wait(20,seconds);
+//         Motor1.spin(reverse,6,volt);
+//         wait(0.4,seconds);
+//         Motor1.stop();
+//       break;
+//       case 3:
+//         Motor1.stop();
+//       break;
+//   }
+//   currentfloor = 3;
+// }
+// void BumperC_is_pressed(){//floor 1
+//    switch(currentfloor){
+//       case 1:
+//         Motor1.stop();
+//       break;
+//       case 2:
+//         Motor1.spin(forward,6,volt);
+//         wait(0.4,seconds);
+//         Motor1.stop();
+//         wait(20,seconds);
+//         Motor1.spin(reverse,6,volt);
+//         wait(0.4,seconds);
+//         Motor1.stop();
+//       break;
+//       case 3:
+//         Motor1.spin(forward,6,volt);
+//         wait(0.8,seconds);
+//         Motor1.stop();
+//         wait(20,seconds);
+//         Motor1.spin(reverse,6,volt);
+//         wait(0.8,seconds);
+//         Motor1.stop();
+//       break;
+//   }
+//   currentfloor = 1;
+// }
+// //Outside call buttons
+
+
+//int j = 10;
+//void BumperA_is_pressed(){
+//  for (int i = 0; i <= j; i++) {
+//    Motor1.spin(forward,10,volt);
+//    Brain.Screen.print("Moter moves");
+//    if(i == 5){
+//      Brain.Screen.print("five times now, yay!");
+//      Motor1.stop();
+//      break;
+//    }
+//  }     
+//}
+int main() {
+  
+BumperB.pressed(secondfloor);
+BumperA.pressed(thirdfloormove); 
+BumperC.pressed(firstfloor); 
+
+BumperE.pressed(secondfloor);
+BumperF.pressed(firstfloor);
+BumperG.pressed(thirdfloormove);
+
+}
